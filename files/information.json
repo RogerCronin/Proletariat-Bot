@@ -1,0 +1,100 @@
+{
+	"loadingMessages": [
+		"This is a temporary loading message",
+		"We're getting your message, you impacient fuck",
+		"Beep boop this is a loading message",
+		"Waiting for the workers to rise...",
+		"While waiting, make sure to purchase a Hockey Sock today",
+		"This bot's loading messages are better than Jacob's",
+		"Like and subscribe for more loading messages",
+		"Launching a gak attack as we speak...",
+		"Go crazy aaaaaa go stupid aaaaaa",
+		"Just a liiiitle bit longer...",
+		"p!loadingmessage",
+		"I bet Jacob's bot would do this faster",
+		"I hope this doesn't take too long",
+		"This is taking way too long",
+		"If you're seeing this for more than a few seconds, something went wrong",
+		"Cargando...",
+		"Beep boop the workers will rise"
+	],
+
+	"errorMessages": [
+		"Oh god oh fuck error message",
+		"Whoopsies this is an error message",
+		"I guess you could call this an error message?",
+		"Ouch oof owie my code went die",
+		"Well *that* wasn't supposed to happen",
+		"Frick this is an error message",
+		"You're so incompetent that you broke a fucking Discord bot. Good job.",
+		"This message is an error. Please tell Roger his bot is broken.",
+		"Bot machine broke",
+		"Congrats on seeing this message. Most people never have the privilege of seeing Proletariat Bot's vast collection of error messages.",
+		"Goddamnit, you broke Proletariat Bot"
+	],
+
+	"activityMessages": [
+		["Killing the bourgeois", 0],
+		["God", 0],
+		["with Fredrick", 0],
+		["with Robot Man III", 0],
+		["Mario Kart Wii", 0],
+		["Minecraft", 0],
+		["TwitchTetris", 0],
+		["Discord", 0],
+		["Russian roulette", 0],
+		["BedWars", 0],
+		["Node.js console output", 3],
+		["Repl.it", 0],
+		["on mixedlaughs.tk", 0],
+		["Yung Walnut", 2],
+		["my Spotify playlist", 2],
+		["my microwave go MMMMMMMMM", 2],
+		["Mario Party DS", 0],
+		["smooth jazz with Kelpy G.", 2],
+		["Gnome Figher", 0],
+		["performances of Gary's Song", 2],
+		["capitalist propaganda", 2],
+		["your shitty opinions", 2],
+		["Adventures in Philadelphia: Node.js Edition", 0],
+		["illicit videos on my 3DS", 3],
+		["Crab Simulator (2020)", 0],
+		["Ant Simulator (2020)", 0],
+		["The Navidson Record", 3],
+		["pirated anime", 3],
+		["capitalist propaganda", 2],
+		["your shitty opinions", 2],
+		["Adventures in Philadelphia: Node.js Edition", 0],
+		["illicit videos on my 3DS", 3],
+		["Crab Simulator (2020)", 0],
+		["Ant Simulator (2020)", 0],
+		["The Navidson Record", 3],
+		["pirated anime", 3],
+		["you", 3],
+		["my Raspberry Pi overheat", 3],
+		["my computer fans take off", 2]
+	],
+
+	"assholeMessagesA": [
+		"play stupid games win stupid prizes",
+		"major red flags",
+		"this!",
+		"that's ridiculous",
+		"wtf are you doing?",
+		"but the other party is also kind of a dick"
+	],
+
+	"assholeMessagesN": [
+		"play stupid games win stupid prizes",
+		"major red flags",
+		"definetly divorce her",
+		"this!",
+		"gtfo of that relationship",
+		"that's ridiculous"
+	],
+
+	"admins": {
+		"316947582670602240": true,
+		"325092229825953793": true
+	}
+}

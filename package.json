@@ -1,0 +1,20 @@
+{
+  "name": "proletariat-bot",
+  "version": "4.0.0",
+  "description": "A Discord bot for the people.",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roger Cronin",
+  "license": "ISC",
+  "dependencies": {
+    "date-and-time": "^0.13.1",
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
+    "snoowrap": "^1.21.0",
+    "syllable": "^4.1.0"
+  }
+}

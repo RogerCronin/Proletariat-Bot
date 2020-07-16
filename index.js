@@ -1,0 +1,109 @@
+console.log("Starting...")
+
+// TODO
+// rewrite commands with node-fetch to include await
+// test p!lunch when school starts
+// further p!weather testing
+
+// npm libraries
+require("dotenv").config()
+const discord = require("discord.js")
+
+// variables
+const client = new discord.Client()
+const commands = { // list of commands
+	nested: {
+		general: {
+			help: require("./commands/general/help.js"),
+			translate: require("./commands/general/translate.js"),
+			server: require("./commands/general/server.js"),
+			lunch: require("./commands/general/lunch.js"),
+			weather: require("./commands/general/weather.js"),
+			uptime: require("./commands/general/uptime.js"),
+			link: require("./commands/general/link.js"),
+			random: require("./commands/general/random.js"),
+			timer: require("./commands/general/timer.js")
+		},
+		fun: {
+			// do p!jahcoin // port jahcoin commands to separate bot
+			// do p!inventory
+			generate: require("./commands/fun/generate.js"),
+			duel: require("./commands/fun/duel.js"),
+			flood: require("./commands/fun/flood.js"),
+			uwuify: require("./commands/fun/uwuify.js"),
+			dab: require("./commands/fun/dab.js"),
+			bedwars: require("./commands/fun/bedwars.js"),
+			reddit: require("./commands/fun/reddit.js"),
+			nasa: require("./commands/fun/nasa.js")
+		}
+	},
+	flat: {}
+}
+for(category in commands.nested) { // remove the categories from commands.nested and add to commands.flat
+	for(command in commands.nested[category]) {
+		commands.flat[command] = commands.nested[category][command]
+	}
+}
+const events = {
+	goodbot: require("./events/goodbot.js"),
+	lyrics: require("./events/lyrics.js"),
+	reddit: require("./events/reddit.js"),
+	haiku: require("./events/haiku.js"),
+	aita: require("./events/aita.js")
+}
+
+global.bot = require("./files/bot.js")(discord, client, commands) // initialize variable containing important data and functions
+
+client.on("ready", () => {
+	console.log("Ready to rumble")
+	let activity = bot.activityMessage()
+	client.user.setActivity(activity[0], { type: activity[1] })
+	setInterval(() => { // changes user activity every 5 minutes
+		activity = bot.activityMessage()
+		client.user.setActivity(activity[0], {type: activity[1]})
+	}, 300000)
+})
+
+if(bot.debug) { // when bot sends a debug message
+	client.on("debug", debug => {
+		console.log("[DEBUG] " + debug) // fancy debug text
+	})
+}
+
+client.on("message", message => {
+	if(message.author.bot) return // protects against bots
+	if(message.content.startsWith(bot.prefix)) { // if it's a command, parse it
+		parseCommand(message)
+	} else { // otherwise process it as an event
+		processEvent(message)
+	}
+})
+
+function parseCommand(message) {
+	args = message.content.slice(bot.prefix.length).split(" ").filter(i => i) // splits command into an array and removes empty arguments
+	let command = bot.commands.flat[args[0]]
+	if(!command) return // if command doesn't exist, return
+	if(command.serverSpecific) { // if command is server specific, check if you're on the right server
+		if(!bot.checkAdmin(message.author.id)) { // if you're not a bot admin (admins can perform server restricted commands)
+			if(message.channel.type != "text") return // dms can't be on servers
+			if(!command.serverSpecific.includes(message.channel.guild.id)) return // if command isn't on approved server, return
+		}
+	}
+	if(command.adminOnly && !bot.checkAdmin(message.author.id)) return
+	if(!command.enableDM && message.channel.type == "dm") return message.channel.send("This command isn't available in DMs.")
+	if(command.permissions ? !message.member.hasPermission(command.permissions) : false) return message.channel.send("You don't have proper permissions to use this command!")
+	let check = command.checkSyntax(message, args)
+	if(check === true) { // if syntax checks out, execute, otherwise send error report
+		command.execute(message, args)
+	} else {
+		message.channel.send(`Incorrect syntax. Command should be formatted as:\n\`${bot.prefix}${command.title}\`\nMessage: ${check}`)
+	}
+}
+
+function processEvent(message) {
+	for(e in events) { // for every event, call it
+		events[e](message)
+	}
+}
+
+client.login(bot.botToken)
