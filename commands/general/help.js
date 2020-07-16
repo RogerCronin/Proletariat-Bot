@@ -2,7 +2,7 @@ module.exports = {
 	adminOnly: true,
 	permissions: "",
 	serverSpecific: false,
-	enableDM: false,
+	enableDM: true,
 	name: "help",
 	title: "help",
 	description: "DMs you a list of the commands",
@@ -10,7 +10,7 @@ module.exports = {
 		var string = `${bot.client.user.username} commands:\n\n`
 		let commands = bot.commands.nested
 		for(category in commands) {
-			string += `${categoryFormat(category)}\n\n`
+			string = `${categoryFormat(category)}\n\n`
 			for(command in commands[category]) {
 				if(bot.commands.flat[command].adminOnly && !bot.checkAdmin(message.author.id)) continue // skips admin commands if you aren't an admin
 				if(bot.commands.flat[command].serverSpecific) { // skips server specific commands if you aren't in approved server
@@ -24,11 +24,12 @@ module.exports = {
 				if(bot.commands.flat[command].adminOnly && bot.checkAdmin(message.author.id)) string += " *(Admin Command)*"
 				string += "\n"
 			}
-			string += "\n"
+			string += "⠀" // blank unicode character
+			message.author.send(string)
+				.catch(() => { return message.channel.send("I can't send DMs to you, check the server privacy settings.") })
+			string = ""
 		}
-		message.author.send(string)
-			.then(() => { if(message.channel.type != "dm") message.channel.send("Quick, somebody! " + message.author.username + " needs help!") })
-			.catch(() => { message.channel.send("I can't send DMs to you, check the server privacy settings.") })
+		if(message.channel.type != "dm") message.channel.send("Quick, somebody! " + message.author.username + " needs help!")
 	},
 	checkSyntax: (message, args) => args[1] ? "More arguments than expected" : true
 }
