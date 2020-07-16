@@ -1,6 +1,6 @@
 var information = require("./information.json") // bunch of json info
 var exports = {
-	debug: true, // debug logging true/false
+	debug: false, // debug logging true/false
 	prefix: "p!", // bot prefix
 	color: 0xDC0000, // embed color background
 	loadingMessage: () => information.loadingMessages[Math.floor(Math.random() * information.loadingMessages.length)], // random loading message
