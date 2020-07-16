@@ -23,10 +23,10 @@ module.exports = {
 		for(let i = 0; i < maxMessages; i++) { // fun fact! the "let" in the for loop fixed a bug found in p!generate for over a year
 			try {
 				let msgs = await channel.messages.fetch({ limit: 100, before: lastID })
-				msgs = msgs.filter(m => m.author.id == user.id)
 				messageCount += msgs.size
+				lastID = msgs.last().id
+				msgs = msgs.filter(m => m.author.id == user.id)
 				messages[i] = msgs
-				lastID = messages[i].last().id
 			} catch(e) {
 				console.log(e)
 				break // ran out of messages to dab
