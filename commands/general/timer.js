@@ -19,6 +19,7 @@ module.exports = {
 		}
 		try {
 			const msg = await message.author.send(format(timers[message.author.id].seconds, timers[message.author.id].reason))
+			message.channel.send(`Created timer \`${reason}\``)
 			timers[message.author.id].msg = msg
 			timers[message.author.id].msg.react("❌")
 				.then(() => timers[message.author.id].msg.react("⏯️"))
@@ -61,7 +62,6 @@ module.exports = {
 		}
 	},
 	checkSyntax: (message, args) => {
-		if(args[3]) return "More arguments than expected."
 		if(!args[2]) return "No time or reason provided."
 		if(!args[1].match(/[0-9]{1,6}[smh]$/m)) return "Incorrectly formatted time."
 		if(message.content.substring(message.content.match(/p!timer [0-9]{1,6}[smh] /m)[0].length).length > 128) return "Reason over 128 characters."

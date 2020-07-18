@@ -1,5 +1,5 @@
 module.exports = {
-	adminOnly: true,
+	adminOnly: false,
 	permissions: "",
 	serverSpecific: false,
 	enableDM: true,
