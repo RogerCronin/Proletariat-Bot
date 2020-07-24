@@ -4,6 +4,7 @@ console.log("Starting...")
 // rewrite commands with node-fetch to include await(?)
 // test p!lunch when school starts
 // fix p!weather / wait for weather.gov to fix their api
+// command aliases(?)
 
 // npm libraries
 require("dotenv").config()
