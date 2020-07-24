@@ -8,9 +8,8 @@ module.exports = {
 	description: "Echos whatever you send back into chat.",
 	execute: async (message, args) => {
 		args.shift()
-		let channel = message.channel
-		message.delete()
-		channel.send(bot.messageReconstruct(args))
+		await message.delete()
+		message.channel.send(bot.messageReconstruct(args))
 	},
 	checkSyntax: (message, args) => {
 		if(!args[1]) return "No text provided."

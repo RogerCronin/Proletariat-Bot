@@ -31,11 +31,17 @@ ${bot.client.user.username} commands:\n\n` // start of help message
 
 		// send the message in several of them cause it's probably going to be over 2000 characters in length
 		let messages = bot.splitLongMessage(string, 2000, "\n")
+		let flag = true
 		for(s of messages) {
-			await message.author.send(s)
-				.then(() => { if(message.channel.type != "dm") message.channel.send("Quick, somebody! " + message.author.username + " needs help!") })
-				.catch(() => { return message.channel.send("I can't send DMs to you, check the server privacy settings.") })
+			try {
+				await message.author.send(s)
+			} catch {
+				flag = false
+				message.channel.send("I can't send DMs to you, check the server privacy settings.")
+				break
+			}
 		}
+		if(flag )if(message.channel.type != "dm") message.channel.send("Quick, somebody! " + message.author.username + " needs help!")
 	},
 	checkSyntax: (message, args) => args[1] ? "More arguments than expected" : true
 }

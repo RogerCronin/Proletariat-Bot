@@ -5,6 +5,7 @@ console.log("Starting...")
 // test p!lunch when school starts
 // fix p!weather / wait for weather.gov to fix their api
 // command aliases(?)
+// rewrite translate / uwuify / etc. with bot.messageReconstruct
 
 // npm libraries
 require("dotenv").config()
