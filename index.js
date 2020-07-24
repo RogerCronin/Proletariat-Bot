@@ -1,9 +1,9 @@
 console.log("Starting...")
 
 // TODO
-// rewrite commands with node-fetch to include await
+// rewrite commands with node-fetch to include await(?)
 // test p!lunch when school starts
-// further p!weather testing
+// fix p!weather / wait for weather.gov to fix their api
 
 // npm libraries
 require("dotenv").config()
@@ -12,7 +12,7 @@ const discord = require("discord.js")
 // variables
 const client = new discord.Client()
 const commands = { // list of commands
-	nested: {
+	nested: { // category cannot contain only admin commands, otherwise fucky p!help format fixing required
 		general: {
 			help: require("./commands/general/help.js"),
 			translate: require("./commands/general/translate.js"),
@@ -22,11 +22,10 @@ const commands = { // list of commands
 			uptime: require("./commands/general/uptime.js"),
 			link: require("./commands/general/link.js"),
 			random: require("./commands/general/random.js"),
-			timer: require("./commands/general/timer.js")
+			timer: require("./commands/general/timer.js"),
+			debug: require("./commands/general/debug.js")
 		},
 		fun: {
-			// do p!jahcoin // port jahcoin commands to separate bot
-			// do p!inventory
 			generate: require("./commands/fun/generate.js"),
 			duel: require("./commands/fun/duel.js"),
 			flood: require("./commands/fun/flood.js"),

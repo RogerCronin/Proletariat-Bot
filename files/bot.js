@@ -1,7 +1,10 @@
+const fs = require("fs")
+
 var information = require("./information.json") // bunch of json info
 var exports = {
 	debug: false, // debug logging true/false
 	prefix: "p!", // bot prefix
+	useCategories: true,
 	color: 0xDC0000, // embed color background
 	loadingMessage: () => information.loadingMessages[Math.floor(Math.random() * information.loadingMessages.length)], // random loading message
 	errorMessage: () => information.errorMessages[Math.floor(Math.random() * information.errorMessages.length)], // random error message
@@ -15,6 +18,8 @@ for(key in envKeys) {
 exports.checkAdmin = id => { // returns if user ID is admin or not
 	return information.admins[id]
 }
+
+exports.manifesto = fs.readFileSync(__dirname + "/manifesto.txt", { encoding: "utf8" })
 
 exports.getUserMention = mention => { // adapted from Discord.js guide
 	if(!mention) return false
@@ -33,6 +38,23 @@ exports.getChannelMention = mention => {
 		mention = mention.slice(2, -1)
 		return bot.client.channels.cache.get(mention)
 	}
+}
+
+// sort of based on Crab Simulator text wrapping, execept good
+exports.splitLongMessage = (string, length, split) => { // onSpace true when split new messages on space, false when on \n
+	let messages = [] // returns array of messages under 2000 characters in length
+	let message = "" // holds text until push to messages array
+	for(t of string.split(split)) { // splits on \n or space depending on onNewLine
+		if((message + split + t).length > length) { // if next iteration is too long
+			messages.push(message) //  push current iteration
+			message = t + split // reset message to next iteration minus before text
+		} else {
+			message += t + split // form next iteration
+		}
+	}
+	message = message.slice(0, split.length * -1) // funky way of removing the last split character(s)
+	if(message) messages.push(message)
+	return messages
 }
 
 module.exports = function(discord, client, commands) {
