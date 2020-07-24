@@ -12,7 +12,7 @@ const discord = require("discord.js")
 // variables
 const client = new discord.Client()
 const commands = { // list of commands
-	nested: { // category cannot contain only admin commands, otherwise fucky p!help format fixing required
+	nested: { // category cannot contain only admin commands, otherwise fucky help command format fixing required
 		general: {
 			help: require("./commands/general/help.js"),
 			translate: require("./commands/general/translate.js"),
