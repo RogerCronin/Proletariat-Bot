@@ -57,6 +57,14 @@ exports.splitLongMessage = (string, length, split) => { // onSpace true when spl
 	return messages
 }
 
+exports.messageReconstruct = arguments => {
+	string = ""
+	for(i of arguments) {
+		string += i + " "
+	}
+	return string
+}
+
 module.exports = function(discord, client, commands) {
 	exports.discord = discord
 	exports.client = client

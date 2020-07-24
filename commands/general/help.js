@@ -33,9 +33,9 @@ ${bot.client.user.username} commands:\n\n` // start of help message
 		let messages = bot.splitLongMessage(string, 2000, "\n")
 		for(s of messages) {
 			await message.author.send(s)
+				.then(() => { if(message.channel.type != "dm") message.channel.send("Quick, somebody! " + message.author.username + " needs help!") })
 				.catch(() => { return message.channel.send("I can't send DMs to you, check the server privacy settings.") })
 		}
-		if(message.channel.type != "dm") message.channel.send("Quick, somebody! " + message.author.username + " needs help!")
 	},
 	checkSyntax: (message, args) => args[1] ? "More arguments than expected" : true
 }

@@ -24,7 +24,8 @@ const commands = { // list of commands
 			link: require("./commands/general/link.js"),
 			random: require("./commands/general/random.js"),
 			timer: require("./commands/general/timer.js"),
-			debug: require("./commands/general/debug.js")
+			debug: require("./commands/general/debug.js"),
+			echo: require("./commands/general/echo.js")
 		},
 		fun: {
 			generate: require("./commands/fun/generate.js"),
