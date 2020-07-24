@@ -8,7 +8,12 @@ module.exports = {
 	description: "DMs you a list of the commands",
 	execute: async (message, args) => {
 		const commands = bot.commands.nested // list of commands with category nesting
-		var string = `${bot.client.user.username} commands:\n\n` // start of help message
+		// remember to update for every change to the bot, add a space before the bullet point
+		var string = `**7/24/2020 Update**
+ • Rewrote some commands
+ • Added under-hood-changes to the bot framework
+
+${bot.client.user.username} commands:\n\n` // start of help message
 
 		if(bot.useCategories) { // use categories
 			for(category in commands) {
