@@ -10,7 +10,7 @@ The prefix for this bot is `p!`. Use `p!help` to see a list of commands and how 
 
 [Invite the bot](https://discord.com/api/oauth2/authorize?client_id=513455833703645184&permissions=388160&scope=bot)
 
-[Repository on repl.it](https://github.com/RogerCronin/Proletariat-Bot)
+[Repository on GitHub](https://github.com/RogerCronin/Proletariat-Bot)
 
 My Discord profile is `Roger#4803`; contact me if you have any questions. Or just figure it out by yourself. Your call.
 
