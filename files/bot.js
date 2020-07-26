@@ -4,6 +4,7 @@ var information = require("./information.json") // bunch of json info
 var exports = {
 	debug: false, // debug logging true/false
 	prefix: "p!", // bot prefix
+	testBotPrefix: "tb!", // bot prefix in test mode
 	useCategories: true,
 	color: 0xDC0000, // embed color background
 	loadingMessage: () => information.loadingMessages[Math.floor(Math.random() * information.loadingMessages.length)], // random loading message
@@ -11,10 +12,12 @@ var exports = {
 	activityMessage: () => information.activityMessages[Math.floor(Math.random() * information.activityMessages.length)], // random activity message
 	information: information
 }
-let envKeys = ["botToken", "yandexKey", "imgBBKey", "unicodeSecret", "hypixelKey", "nasaKey", "redditID", "redditSecret", "redditPassword"] // list of keys in process.env
+
+let envKeys = ["botToken", "testBot", "yandexKey", "imgBBKey", "unicodeSecret", "hypixelKey", "nasaKey", "redditID", "redditSecret", "redditPassword"] // list of keys in process.env
 for(key in envKeys) {
 	exports[envKeys[key]] = process.env[envKeys[key]] // add them to exports
 }
+
 exports.checkAdmin = id => { // returns if user ID is admin or not
 	return information.admins[id]
 }

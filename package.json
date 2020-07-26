@@ -4,7 +4,8 @@
   "description": "A Discord bot for the people.",
   "main": "index.js",
   "scripts": {
-    "start": "index.js",
+    "start": "start.js",
+    "dev": "devStart.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Roger Cronin",

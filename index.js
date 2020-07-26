@@ -108,4 +108,10 @@ function processEvent(message) {
 	}
 }
 
-client.login(bot.botToken)
+module.exports = flag => {
+	if(flag) {
+		bot.prefix = bot.testBotPrefix
+		bot.botToken = bot.testBot
+	}
+	client.login(bot.botToken)
+}

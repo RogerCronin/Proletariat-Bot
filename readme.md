@@ -18,3 +18,7 @@ My Discord profile is `Roger#4803`; contact me if you have any questions. Or jus
 
 Shoot me a DM if you want anything added to the bot. I might consider it. Or I might not.
 I don't think anyone wants to make a pull request for this shitty code but feel free.
+
+## Patch Notes (Update 2020-07-26)
+ * Rewrote p!help
+ * Added under-the-hood changes to the bot framework
