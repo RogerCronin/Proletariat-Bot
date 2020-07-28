@@ -1,6 +1,6 @@
 # Proletariat Bot
 
-Proletariat Bot is a Discord bot coded in Node.js using the [Discord.js](https://discord.js.org/#/) npm library. This is the fourth iteration of the bot, a great-grandson of the original, if you will. Well technically the fifth, but I've repressed the memories of my original Proletariat Bot project so I can't tell you anything about it.
+Proletariat Bot is a Discord bot writen in Node.js using the [Discord.js](https://discord.js.org/#/) npm library. This is the fourth iteration of the bot, a great-grandson of the original, if you will. Well technically the fifth, but I've repressed the memories of my original Proletariat Bot project so I can't tell you anything about it.
 
 ## Usage
 
@@ -19,6 +19,6 @@ My Discord profile is `Roger#4803`; contact me if you have any questions. Or jus
 Shoot me a DM if you want anything added to the bot. I might consider it. Or I might not.
 I don't think anyone wants to make a pull request for this shitty code but feel free.
 
-## Patch Notes (Update 2020-07-26)
+## Patch Notes (Update 2020-07-27)
  * Rewrote p!help
- * Added under-the-hood changes to the bot framework
+ * Rewrote p!flood

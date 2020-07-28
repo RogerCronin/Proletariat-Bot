@@ -44,6 +44,7 @@ exports.getChannelMention = mention => {
 }
 
 // sort of based on Crab Simulator text wrapping, execept good
+// also this is obsolete now
 exports.splitLongMessage = (string, length, split) => { // onSpace true when split new messages on space, false when on \n
 	let messages = [] // returns array of messages under 2000 characters in length
 	let message = "" // holds text until push to messages array

@@ -9,9 +9,9 @@ module.exports = {
 	execute: async (message, args) => {
 		const commands = bot.commands.nested // list of commands with category nesting
 		// remember to update for every change to the bot, add a space before the bullet point
-		var string = `**7/26/2020 Update**
+		var string = `**Update 2020-07-27**
  • Rewrote p!help
- • Added under-the-hood changes to the bot framework
+ • Rewrote p!flood
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 
@@ -29,6 +29,12 @@ ${bot.client.user.username} commands:\n\n` // start of help message
 			}
 		}
 
+		message.author.send(string, { split: true })
+			.then(() => { if(message.channel.type != "dm") message.channel.send(`Quick, somebody! ${message.author.username} needs help!`) })
+			.catch(() => { message.channel.send("I can't send DMs to you, check the server privacy settings.") })
+
+		/* REST IN PEACE my favorite piece of code that I've ever written. took me an hour and a half to write those 7 lines ;(
+
 		// send the message in several of them cause it's probably going to be over 2000 characters in length
 		let messages = bot.splitLongMessage(string, 2000, "\n").map(e => { // array of message.author.send()'s
 			return message.author.send(e)
@@ -36,6 +42,8 @@ ${bot.client.user.username} commands:\n\n` // start of help message
 		Promise.all(messages) // executes all of them
 			.then(() => { if(message.channel.type != "dm") message.channel.send("Help is on the way. Check your DMs!") }) // if all are successful, this line is run
 			.catch(() => message.channel.send("I can't send DMs to you, check the server privacy settings.")) // if one fails, this line is run
+
+		*/
 	},
 	checkSyntax: (message, args) => args[1] ? "More arguments than expected" : true
 }
