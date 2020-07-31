@@ -69,6 +69,22 @@ exports.messageReconstruct = arguments => {
 	return string
 }
 
+class Database {
+	constructor() {
+		this.json = JSON.parse(fs.readFileSync(__dirname + "\\database.json", "utf-8"))
+	}
+	write() {
+		return new Promise((resolve, reject) => {
+			fs.writeFile(__dirname + "\\database.json", JSON.stringify(this.json), err => {
+				if(err) reject(err)
+				else resolve()
+			})
+		})
+	}
+}
+
+exports.db = new Database()
+
 module.exports = function(discord, client, commands) {
 	exports.discord = discord
 	exports.client = client

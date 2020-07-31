@@ -19,6 +19,9 @@ My Discord profile is `Roger#4803`; contact me if you have any questions. Or jus
 Shoot me a DM if you want anything added to the bot. I might consider it. Or I might not.
 I don't think anyone wants to make a pull request for this shitty code but feel free.
 
-## Patch Notes (Update 2020-07-27)
- * Rewrote p!help
- * Rewrote p!flood
+## Patch Notes (Update 2020-07-31)
+ * Rewrote all node-fetch code to use async/await
+ * Rewrote p!translate and p!uwuify
+ * Added p!gulag: people in the gulag can't use bot commands
+ * Added rudimentary database support for p!gulag
+ * Changed the category p!echo is filed under

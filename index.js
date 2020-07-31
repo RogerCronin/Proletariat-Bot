@@ -1,11 +1,9 @@
 console.log("Starting...")
 
 // TODO
-// rewrite commands with node-fetch to include await(?)
+// command aliases(?)
 // test p!lunch when school starts
 // fix p!weather / wait for weather.gov to fix their api
-// command aliases(?)
-// rewrite translate / uwuify / etc. with bot.messageReconstruct
 
 // npm libraries
 require("dotenv").config()
@@ -13,7 +11,8 @@ const discord = require("discord.js")
 
 // variables
 const client = new discord.Client()
-const commands = { // list of commands
+// list of commands
+const commands = { // writing all of them out is necessary so there is a defined order for p!help
 	nested: { // category cannot contain only admin commands, otherwise fucky help command format fixing required
 		general: {
 			help: require("./commands/general/help.js"),
@@ -25,8 +24,7 @@ const commands = { // list of commands
 			link: require("./commands/general/link.js"),
 			random: require("./commands/general/random.js"),
 			timer: require("./commands/general/timer.js"),
-			debug: require("./commands/general/debug.js"),
-			echo: require("./commands/general/echo.js")
+			debug: require("./commands/general/debug.js")
 		},
 		fun: {
 			generate: require("./commands/fun/generate.js"),
@@ -36,7 +34,9 @@ const commands = { // list of commands
 			dab: require("./commands/fun/dab.js"),
 			bedwars: require("./commands/fun/bedwars.js"),
 			reddit: require("./commands/fun/reddit.js"),
-			nasa: require("./commands/fun/nasa.js")
+			nasa: require("./commands/fun/nasa.js"),
+			echo: require("./commands/fun/echo.js"),
+			gulag: require("./commands/fun/gulag.js")
 		}
 	},
 	flat: {}
@@ -94,6 +94,7 @@ function parseCommand(message) {
 	if(command.adminOnly && !bot.checkAdmin(message.author.id)) return
 	if(!command.enableDM && message.channel.type == "dm") return message.channel.send("This command isn't available in DMs.")
 	if(command.permissions ? !message.member.hasPermission(command.permissions) : false) return message.channel.send("You don't have proper permissions to use this command!")
+	if(bot.db.json[message.author.id] && !bot.checkAdmin(message.author.id)) return message.channel.send(`You are in gulag and can't use bot commands! Have a bot admin use ${bot.prefix}gulag on you.`)
 	let check = command.checkSyntax(message, args)
 	if(check === true) { // if syntax checks out, execute, otherwise send error report
 		command.execute(message, args)

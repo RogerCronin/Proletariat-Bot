@@ -11,65 +11,62 @@ module.exports = {
 	execute: async (message, args) => {
 		const msg = await message.channel.send(bot.loadingMessage())
 		if(args[1] == "today" || args[1] == "tomorrow") {
-			fetch("https://api.weather.gov/gridpoints/PHI/32,49/forecast", { headers: { "User-Agent": "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)" } })
-				.then(res => res.json())
-				.then(data => {
-					var ref = data.properties.periods // array of all forecasts
-					// here change ref from array of all to particular index
-					if(args[1] == "today") { // if today, get latest forecast
-						ref = ref[0]
-					} else { // if tomorrow, determine which index is for tomorrow
-						if(ref[0].isDaytime) {
-							ref = ref[2] // isDaytime is true, so [0] = today, [1] = tonight, [2] = tomorrow
-						} else {
-							ref = ref[1] // isDaytime is false, so [0] = tonight, [1] = tomorrow
-						}
+			try {
+				let res = await fetch("https://api.weather.gov/gridpoints/PHI/32,49/forecast", { headers: { "User-Agent": "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)" } })
+				let data = await res.json()
+				var ref = data.properties.periods // array of all forecasts
+				// here change ref from array of all to particular index
+				if(args[1] == "today") { // if today, get latest forecast
+					ref = ref[0]
+				} else { // if tomorrow, determine which index is for tomorrow
+					if(ref[0].isDaytime) {
+						ref = ref[2] // isDaytime is true, so [0] = today, [1] = tonight, [2] = tomorrow
+					} else {
+						ref = ref[1] // isDaytime is false, so [0] = tonight, [1] = tomorrow
 					}
-					let embed = new bot.discord.MessageEmbed()
-						.setColor(bot.color)
-						.setTitle(ref.name)
-						.setDescription(ref.detailedForecast)
-						.setThumbnail(ref.icon)
-						.setURL("https://forecast.weather.gov/MapClick.php?lat=39.45147990000004&lon=-75.71682999999996#.XLeIwuhKiUk")
-					msg.edit("", embed)
-				})
-				.catch(err => {
-					console.log(err)
-					msg.edit(bot.errorMessage())
-				})
+				}
+				let embed = new bot.discord.MessageEmbed()
+					.setColor(bot.color)
+					.setTitle(ref.name)
+					.setDescription(ref.detailedForecast)
+					.setThumbnail(ref.icon)
+					.setURL("https://forecast.weather.gov/MapClick.php?lat=39.45147990000004&lon=-75.71682999999996#.XLeIwuhKiUk")
+				msg.edit("", embed)
+			} catch(err) {
+				console.error(err)
+				msg.edit(bot.errorMessage())
+			}
 		} else { // p!weather current
-			fetch("https://api.weather.gov/stations/KILG/observations/latest", { headers: { "User-Agent": "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)" } })
-				.then(res => res.json())
-				.then(data => {
-					var ref = data.properties
-					let string = ""
-					if(ref.temperature.value) string += `Temperature - ${format(ref.temperature)}°F
+			try {
+				let res = await fetch("https://api.weather.gov/stations/KILG/observations/latest", { headers: { "User-Agent": "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)" } })
+				let data = await res.json()
+				var ref = data.properties
+				let string = ""
+				if(ref.temperature.value) string += `Temperature - ${format(ref.temperature)}°F
 `
-					if(ref.relativeHumidity.value) string += `Humidity - ${format(ref.relativeHumidity)}%
+				if(ref.relativeHumidity.value) string += `Humidity - ${format(ref.relativeHumidity)}%
 `
-					if(ref.windSpeed.value && ref.windDirection.value) string += `Wind Speed - ${format(ref.windDirection)} ${format(ref.windSpeed)} mph
+				if(ref.windSpeed.value && ref.windDirection.value) string += `Wind Speed - ${format(ref.windDirection)} ${format(ref.windSpeed)} mph
 `
-					if(ref.dewpoint.value) string += `Dewpoint - ${format(ref.dewpoint)}°F
+				if(ref.dewpoint.value) string += `Dewpoint - ${format(ref.dewpoint)}°F
 `
-					if(ref.visibility.value) string += `Visibility - ${format(ref.visibility)} miles
+				if(ref.visibility.value) string += `Visibility - ${format(ref.visibility)} miles
 `
-					if(ref.windChill.value) string += `Wind Chill - ${format(ref.windChill)}°F
+				if(ref.windChill.value) string += `Wind Chill - ${format(ref.windChill)}°F
 `
-					if(ref.heatIndex.value) string += `Heat Index - ${format(ref.heatIndex)}°F
+				if(ref.heatIndex.value) string += `Heat Index - ${format(ref.heatIndex)}°F
 `
-					let embed = new bot.discord.MessageEmbed()
-						.setColor(bot.color)
-						.setTitle("Current Weather")
-						.setThumbnail(ref.icon)
-						.setURL("https://forecast.weather.gov/MapClick.php?lat=39.45147990000004&lon=-75.71682999999996#.XLeIwuhKiUk")
-						.setDescription(string)
-					msg.edit("", embed)
-					console.log(ref)
-				})
-				.catch(err => {
-					console.log(err)
-					msg.edit(bot.errorMessage())
-				})
+				let embed = new bot.discord.MessageEmbed()
+					.setColor(bot.color)
+					.setTitle("Current Weather")
+					.setThumbnail(ref.icon)
+					.setURL("https://forecast.weather.gov/MapClick.php?lat=39.45147990000004&lon=-75.71682999999996#.XLeIwuhKiUk")
+					.setDescription(string)
+				msg.edit("", embed)
+			} catch(err) {
+				console.error(err)
+				msg.edit(bot.errorMessage())
+			}
 		}
 	},
 	checkSyntax: (message, args) => {

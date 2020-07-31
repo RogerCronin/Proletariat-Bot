@@ -11,20 +11,19 @@ module.exports = {
 	execute: async (message, args) => {
 		const msg = await message.channel.send(bot.loadingMessage())
 		if(args[1] == "apod") {
-			fetch(`https://api.nasa.gov/planetary/apod?api_key=${bot.nasaKey}`)
-				.then(res => res.json())
-				.then(data => {
-					let embed = new bot.discord.MessageEmbed()
-          	.setColor(bot.color)
-			  		.setTitle(data.title)
-          	.setDescription(data.explanation.replace(/\|/g, "｜"))
-          	.setImage(data.hdurl)
-       		msg.edit("", embed)
-				})
-				.catch(e => {
-					console.log(e)
-					msg.edit("", bot.errorMessage())
-				})
+			try {
+				let res = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${bot.nasaKey}`)
+				let data = await res.json()
+				let embed = new bot.discord.MessageEmbed()
+					.setColor(bot.color)
+					.setTitle(data.title)
+					.setDescription(data.explanation.replace(/\|/g, "｜"))
+					.setImage(data.hdurl)
+				msg.edit("", embed)
+			} catch(err) {
+				console.error(error)
+				msg.edit(bot.errorMessage())
+			}
 		} else {
 			marsRequest(msg)
 		}
@@ -39,19 +38,19 @@ module.exports = {
 
 async function marsRequest(msg) {
 	let sol = Math.floor(Math.random() * 2540)
-	fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&camera=fhaz&api_key=${bot.nasaKey}`)
-			.then(res => res.json())
-			.then(data => {
-				let image = data.photos[Math.floor(Math.random() * data.photos.length)]
-				if(!image) marsRequest(msg) // if it fails for some reason, just call the function again! good coding standards!
-				let embed = new bot.discord.MessageEmbed()
-					.setColor(bot.color)
-					.setTitle(image.earth_date)
-					.setImage(image.img_src)
-				msg.edit("", embed)
-			})
-			.catch(e => {
-				console.log(e)
-				msg.edit(bot.errorMessage())
-			})
+	try {
+		let res = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&camera=fhaz&api_key=${bot.nasaKey}`)
+		let data = await res.json()
+		let image = data.photos[Math.floor(Math.random() * data.photos.length)]
+		if(!image) marsRequest(msg) // if it fails for some reason, just call the function again! good coding standards!
+		// potential error here if you're unlucky enough to hit an error for 11034 times in a row
+		let embed = new bot.discord.MessageEmbed()
+			.setColor(bot.color)
+			.setTitle(image.earth_date)
+			.setImage(image.img_src)
+		msg.edit("", embed)
+	} catch(err) {
+		console.log(err)
+		msg.edit(bot.errorMessage())
+	}
 }

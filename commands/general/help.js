@@ -9,9 +9,22 @@ module.exports = {
 	execute: async (message, args) => {
 		const commands = bot.commands.nested // list of commands with category nesting
 		// remember to update for every change to the bot, add a space before the bullet point
-		var string = `**Update 2020-07-27**
- • Rewrote p!help
- • Rewrote p!flood
+		/* paste readme.md patch notes here
+
+		## Patch Notes (Update 2020-07-31)
+		 * Rewrote all node-fetch code to use async/await
+		 * Rewrote p!translate and p!uwuify
+		 * Added p!gulag: people in the gulag can't use bot commands
+		 * Added rudimentary database support for p!gulag
+		 * Changed the category p!echo is filed under
+
+		*/
+		var string = `**Patch Notes (Update 2020-07-31)**
+ • Rewrote all node-fetch code to use async/await
+ • Rewrote p!translate and p!uwuify
+ • Added p!gulag: people in the gulag can't use bot commands
+ • Added rudimentary database support for p!gulag
+ • Changed the category p!echo is filed under
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 
