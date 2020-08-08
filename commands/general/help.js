@@ -11,20 +11,15 @@ module.exports = {
 		// remember to update for every change to the bot, add a space before the bullet point
 		/* paste readme.md patch notes here
 
-		## Patch Notes (Update 2020-07-31)
-		 * Rewrote all node-fetch code to use async/await
-		 * Rewrote p!translate and p!uwuify
-		 * Added p!gulag: people in the gulag can't use bot commands
-		 * Added rudimentary database support for p!gulag
-		 * Changed the category p!echo is filed under
+		## Patch Notes (Update 2020-08-08)
+		 * Removed p!gulag
+		 * Added command aliases to bot framework
 
 		*/
-		var string = `**Patch Notes (Update 2020-07-31)**
- • Rewrote all node-fetch code to use async/await
- • Rewrote p!translate and p!uwuify
- • Added p!gulag: people in the gulag can't use bot commands
- • Added rudimentary database support for p!gulag
- • Changed the category p!echo is filed under
+		// ensure there is a blank line bewteen the end of patch notes and ${bot.client.user.username} stuff
+		var string = `**Patch Notes (Update 2020-08-08)**
+ • Removed p!gulag
+ • Added command aliases to bot framework
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 
@@ -79,6 +74,9 @@ function fetchCommand(command, string, message) {
 		}
 	}
 	string += `\`${bot.prefix}${bot.commands.flat[command].title}\` - ${bot.commands.flat[command].description}` // adds command
+	if(bot.commands.flat[command].aliases && bot.commands.flat[command].aliases.length) string += ` *(Aliases \`${bot.commands.flat[command].aliases.toString().replace(/,/g, "`, `")}\`)*` // adds aliases
+	// the && is necessary because I haven't added command.aliases to every command
+	// fix this when you make a standalone bot framework
 	if(bot.commands.flat[command].permissions) string += ` *(Requires ${bot.commands.flat[command].permissions.toString().replace(/,/g, ", ")})*` // add permission requirements
 	if(bot.commands.flat[command].adminOnly && bot.checkAdmin(message.author.id)) string += " *(Admin Command)*" // add admin command notice
 	string += "\n"

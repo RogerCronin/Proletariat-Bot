@@ -5,6 +5,7 @@ module.exports = {
 	enableDM: true, // if command can be sent in DMs, true
 	// make sure server specific and permissive commands aren't allowed in DMs
 	name: "help", // name of the command
+	aliases: [], // array of aliases for the command
 	title: "help <arg1> [string..]", // name of the command + how to use
 	description: "Description of your bot.", // description of command
 	execute: (message, args) => { // function that is run when command runs

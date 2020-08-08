@@ -4,6 +4,7 @@ console.log("Starting...")
 // command aliases(?)
 // test p!lunch when school starts
 // fix p!weather / wait for weather.gov to fix their api
+// optional prefix @bot
 
 // npm libraries
 require("dotenv").config()
@@ -35,15 +36,19 @@ const commands = { // writing all of them out is necessary so there is a defined
 			bedwars: require("./commands/fun/bedwars.js"),
 			reddit: require("./commands/fun/reddit.js"),
 			nasa: require("./commands/fun/nasa.js"),
-			echo: require("./commands/fun/echo.js"),
-			gulag: require("./commands/fun/gulag.js")
+			echo: require("./commands/fun/echo.js")
 		}
 	},
-	flat: {}
+	flat: {},
+	aliases: {}
 }
-for(category in commands.nested) { // remove the categories from commands.nested and add to commands.flat
-	for(command in commands.nested[category]) {
-		commands.flat[command] = commands.nested[category][command]
+for(category in commands.nested) {
+	for(commandName in commands.nested[category]) {
+		command = commands.nested[category][commandName]
+		// take the categories from commands.nested and add to commands.flat
+		commands.flat[commandName] = command
+		// add aliases to commands.aliases object
+		if(command.aliases) for(alias of command.aliases) commands.aliases[alias] = command
 	}
 }
 const events = {
@@ -83,7 +88,7 @@ client.on("message", message => {
 
 function parseCommand(message) {
 	args = message.content.slice(bot.prefix.length).split(" ").filter(i => i) // splits command into an array and removes empty arguments
-	let command = bot.commands.flat[args[0]]
+	let command = bot.commands.flat[args[0]] || bot.commands.aliases[args[0]]
 	if(!command) return // if command doesn't exist, return
 	if(command.serverSpecific) { // if command is server specific, check if you're on the right server
 		if(!bot.checkAdmin(message.author.id)) { // if you're not a bot admin (admins can perform server restricted commands)
@@ -94,7 +99,6 @@ function parseCommand(message) {
 	if(command.adminOnly && !bot.checkAdmin(message.author.id)) return
 	if(!command.enableDM && message.channel.type == "dm") return message.channel.send("This command isn't available in DMs.")
 	if(command.permissions ? !message.member.hasPermission(command.permissions) : false) return message.channel.send("You don't have proper permissions to use this command!")
-	if(bot.db.json[message.author.id] && !bot.checkAdmin(message.author.id)) return message.channel.send(`You are in gulag and can't use bot commands! Have a bot admin use ${bot.prefix}gulag on you.`)
 	let check = command.checkSyntax(message, args)
 	if(check === true) { // if syntax checks out, execute, otherwise send error report
 		command.execute(message, args)
