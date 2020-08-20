@@ -1,5 +1,3 @@
-const snoowrap = require("snoowrap")
-
 module.exports = {
 	adminOnly: false,
 	permissions: "",
@@ -18,13 +16,6 @@ module.exports = {
 		} else {
 			subreddit = args[1].startsWith("r/") ? args[1].slice(2) : args[1]
 		}
-		let redditWrap = new snoowrap({
-			userAgent: "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)",
-			clientId: bot.redditID,
-			clientSecret: bot.redditSecret,
-			username: "SaladTheMediocre", // hey that's me
-			password: bot.redditPassword
-		})
 		var handleListing = listing => {
 			let nsfwFlag = false
 			if(!listing.length) { // if the subreddit doesn't exist
@@ -62,7 +53,7 @@ module.exports = {
 					message.channel.send(new bot.discord.MessageAttachment(listing[0].url, "SPOILER_image" + listing[0].url.substr(-4)))
 				}
 			}
-		subreddit = redditWrap.getSubreddit(subreddit)
+		subreddit = bot.redditWrap.getSubreddit(subreddit)
 		switch(sort) {
 			case "hot":
 				subreddit.getHot().then(listing => {
