@@ -6,7 +6,7 @@ module.exports = {
 	serverSpecific: false,
 	enableDM: true,
 	name: "timer",
-	title: "timer <[number under 48 hours]<s/m/h> [reason under 128 characters]>",
+	title: "timer <[number under 48 hours]<s/m/h>> [reason..]",
 	description: "Sets a timer for a set number of seconds, minutes, or hours. Can't be over 48 hours because I can't be bothered.",
 	execute: async (message, args) => {
 		if(timers[message.author.id]) return message.channel.send("You already have a timer going. Click the X reaction under the timer to delete it.")

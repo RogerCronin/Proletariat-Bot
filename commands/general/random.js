@@ -4,7 +4,7 @@ module.exports = {
 	serverSpecific: false,
 	enableDM: true,
 	name: "random",
-	title: "random [options 1], [option 2], ..",
+	title: "random <[options 1],> <[option 2],> ..",
 	description: "Randomly chooses an option. Options are separated with commas.",
 	execute: async (message, args) => {
 		let options = message.content.slice(9).split(",").filter(i => i)
