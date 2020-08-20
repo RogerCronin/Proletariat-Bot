@@ -1,4 +1,5 @@
 const fs = require("fs")
+const snoowrap = require("snoowrap")
 
 var information = require("./information.json") // bunch of json info
 var exports = {
@@ -68,6 +69,14 @@ exports.messageReconstruct = arguments => {
 	}
 	return string
 }
+
+exports.redditWrap = new snoowrap({
+	userAgent: "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)",
+	clientId: exports.redditID,
+	clientSecret: exports.redditSecret,
+	username: "SaladTheMediocre", // hey that's me
+	password: exports.redditPassword
+})
 
 module.exports = function(discord, client, commands) {
 	exports.discord = discord

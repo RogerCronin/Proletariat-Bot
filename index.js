@@ -25,7 +25,7 @@ const commands = { // writing all of them out is necessary so there is a defined
 			link: require("./commands/general/link.js"),
 			random: require("./commands/general/random.js"),
 			timer: require("./commands/general/timer.js"),
-			download: require("./commands/general/download.js"),
+			//download: require("./commands/general/download.js"),
 			debug: require("./commands/general/debug.js")
 		},
 		fun: {
