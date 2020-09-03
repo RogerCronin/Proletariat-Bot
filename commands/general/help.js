@@ -11,15 +11,13 @@ module.exports = {
 		// remember to update for every change to the bot, add a space before the bullet point
 		/* paste readme.md patch notes here
 
-		## Patch Notes (Update 2020-08-08)
-		 * Removed p!gulag
-		 * Added command aliases to bot framework
+		## Patch Notes (Update 2020-09-03)
+		 * Added p!download
 
 		*/
 		// ensure there is a blank line bewteen the end of patch notes and ${bot.client.user.username} stuff
-		var string = `**Patch Notes (Update 2020-08-08)**
- • Removed p!gulag
- • Added command aliases to bot framework
+		var string = `**Patch Notes (Update 2020-09-03)**
+ • Added p!download
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 
