@@ -10,7 +10,7 @@ module.exports = {
 	name: "download",
 	aliases: [],
 	title: "download [twitter url/reddit url]",
-	description: "Downloads a video from the Twitter or Reddit URL provided courteous of RipSave.",
+	description: "Downloads a video from the Twitter or Reddit URL provided courteous of RipSave and SaveTweetVid.",
 	execute: async (message, args) => {
 		const msg = await message.channel.send(bot.loadingMessage())
 		if(Array.from(args[1].matchAll(/(?:https:\/\/)(?:www\.)?(twitter|reddit)/g))[0][1] == "reddit") { // I love regex
@@ -22,15 +22,25 @@ module.exports = {
 				let data = await res.json()
 				let parsedHTML = htmlParser.parse(data.data)
 				// get the download link information
-				res = await fetch(`https://ripsave.com${parsedHTML.querySelector(".downloadTable").childNodes[3].childNodes[1].childNodes[5].firstChild.getAttribute("href")}`)
-				data = await res.json()
-				// make an embed with the download as a link
-				let embed = new bot.discord.MessageEmbed()
-					.setColor(bot.color)
-					.setTitle(data.data.t)
-					.setURL(`https://ripsave.com/download?s=reddit&f=${encodeURIComponent(data.data.f)}&t=${encodeURIComponent(data.data.t)}`)
-				msg.edit("", embed) // done
-			} catch { // misc catch because I can't be bothered
+				let link = parsedHTML.querySelector(".downloadTable").childNodes[3].childNodes[1].childNodes[5].firstChild.getAttribute("href")
+				if(link.startsWith("/")) { // if video has audio
+					res = await fetch(`https://ripsave.com${parsedHTML.querySelector(".downloadTable").childNodes[3].childNodes[1].childNodes[5].firstChild.getAttribute("href")}`)
+					data = await res.json()
+					// make an embed with the download as a link
+					let embed = new bot.discord.MessageEmbed()
+						.setColor(bot.color)
+						.setTitle(data.data.t)
+						.setURL(`https://ripsave.com/download?s=reddit&f=${encodeURIComponent(data.data.f)}&t=${encodeURIComponent(data.data.t)}`)
+					msg.edit("", embed) // done
+				} else {
+					let embed = new bot.discord.MessageEmbed()
+						.setColor(bot.color)
+						.setTitle(Array.from(args[1].matchAll(/reddit.com\/r\/.*\/comments\/.{6}\/(\w*)\//g))[0][1].replace(/_/g, " ")[0].toUpperCase() + Array.from(args[1].matchAll(/reddit.com\/r\/.*\/comments\/.{6}\/(\w*)\//g))[0][1].replace(/_/g, " ").slice(1)) // I'm so sorry
+						.setURL(link)
+					msg.edit("", embed)
+				}
+			} catch(e) { // misc catch because I can't be bothered
+				console.log(e)
 				msg.edit(bot.errorMessage())
 			}
 		} else {
