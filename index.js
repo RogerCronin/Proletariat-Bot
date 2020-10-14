@@ -70,12 +70,12 @@ module.exports = isDev => {
 	})
 	bot.client.on("ready", () => {
 		console.log("Ready to rumble")
-		const botLogsChannel = bot.client.channels.cache.get("765996274721751040")
-		console.log(botLogsChannel.lastMessage)
-		if(botLogsChannel.lastMessage.content == "❔ Restart bot") {
-			botLogsChannel.lastMessage.edit("✔️ Restart bot")
+		const lastMessage = bot.client.channels.cache.get("765996274721751040").messages.cache.first()
+		console.log(lastMessage.content)
+		if(lastMessage.content == "❔ Restart bot") {
+			lastMessage.edit("✔️ Restart bot")
 		} else {
-			botLogsChannel.lastMessage.send("Bot restarted")
+			lastMessage.send("Bot restarted")
 		}
 	})
 	bot.client.on("presenceUpdate", (before, after) => { // robot man offline stuff
