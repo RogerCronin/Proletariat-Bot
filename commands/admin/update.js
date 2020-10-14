@@ -15,6 +15,7 @@ module.exports = new banner.Command({
 			await msg_1.edit("✅ Pull latest version from GitHub")
 			return message.channel.send("Already up to date! No need to restart.")
 		}
+		await msg_1.edit("✅ Pull latest version from GitHub")
 		const msg_2 = await message.channel.send("❔ Restart bot")
 		//console.log(execSync("pm2 restart Proletariat-Bot").toString())
 	},
