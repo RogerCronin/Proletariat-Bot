@@ -20,6 +20,7 @@ module.exports = new banner.Command({
 		execSync("pm2 restart Proletariat-Bot") // kills process
 	},
 	checkSyntax: function(message, args) {
+		if(args[1]) return "More arguments than expected."
 		if(message.author.id != "316947582670602240") return "You don't have proper credentials!"
 		return true
 	}
