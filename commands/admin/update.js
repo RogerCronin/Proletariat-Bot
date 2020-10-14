@@ -14,7 +14,7 @@ module.exports = new banner.Command({
     console.log(execSync("git pull"))
     await msg_1.edit("✔️ Pull latest version from GitHub")
     const msg_2 = await message.channel.send("❔ Restart bot")
-    console.log(execSync("pm2 restart"))
+    console.log(execSync("pm2 restart Proletariat-Bot"))
 	},
 	checkSyntax: function(message, args) {
     if(message.user.id != "316947582670602240") return "You don't have proper credentials!"
