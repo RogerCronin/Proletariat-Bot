@@ -70,6 +70,13 @@ module.exports = isDev => {
 	})
 	bot.client.on("ready", () => {
 		console.log("Ready to rumble")
+		const botLogsChannel = bot.channels.cache.get("765996274721751040")
+		let lastMessage = await botLogsChannel.lastMessage
+		if(botLogsChannel.lastMessage.content == "❔ Restart bot") {
+			botLogsChannel.edit("✔️ Restart bot")
+		} else {
+			botLogsChannel.send("Bot restarted")
+		}
 	})
 	bot.client.on("presenceUpdate", (before, after) => { // robot man offline stuff
 		if(!before || !after) return // why would an event trigger with both parameters undefined???? wtf discord.js?????
