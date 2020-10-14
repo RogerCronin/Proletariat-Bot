@@ -35,7 +35,8 @@ const commands = {
 	nasa: require("./commands/fun/nasa.js"),
 	// admin
 	debug: require("./commands/admin/debug.js"),
-	echo: require("./commands/admin/echo.js")
+	echo: require("./commands/admin/echo.js"),
+	echo: require("./commands/admin/update.js")
 }
 const events = {
 	goodbot: require("./events/goodbot.js"),
