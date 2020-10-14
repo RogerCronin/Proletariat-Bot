@@ -14,7 +14,7 @@ module.exports = new banner.Command({
 		console.log(2)
 		const msg_1 = await message.channel.send("❔ Pull latest version from GitHub")
 		console.log(3)
-		console.log(execSync("git pull"))
+		console.log(execSync("git pull").toString())
 		console.log(4)
 		await msg_1.edit("✔️ Pull latest version from GitHub")
 		console.log(5)

@@ -74,10 +74,9 @@ module.exports = isDev => {
 		let lastMessage = await bot.client.channels.cache.get("765996274721751040").messages.fetch({ limit: 1 })
 		lastMessage = lastMessage.first()
 		if(lastMessage.content == "❔ Restart bot") {
-			lastMessage.edit("✔️ Restart bot")
-		} else {
-			lastMessage.channel.send("Bot restarted")
+			await lastMessage.edit("✅ Restart bot")
 		}
+		lastMessage.channel.send("Bot restarted")
 	})
 	bot.client.on("presenceUpdate", (before, after) => { // robot man offline stuff
 		if(!before || !after) return // why would an event trigger with both parameters undefined???? wtf discord.js?????
