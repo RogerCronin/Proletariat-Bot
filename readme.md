@@ -14,7 +14,7 @@ The prefix for this bot is `p!`. Use `p!help` to see a list of commands and how 
 
 [Follow my Twitter](https://twitter.com/brackets_square)
 
-My Discord profile is `Roger#4803`; contact me if you have any questions. Or just figure it out by yourself. Your call..
+My Discord profile is `Roger#4803`; contact me if you have any questions. Or just figure it out by yourself. Your call.
 
 ## Contributing
 
