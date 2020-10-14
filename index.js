@@ -71,7 +71,7 @@ module.exports = isDev => {
 	bot.client.on("ready", () => {
 		console.log("Ready to rumble")
 		const botLogsChannel = bot.channels.cache.get("765996274721751040")
-		let lastMessage = await botLogsChannel.lastMessage
+		let lastMessage = botLogsChannel.lastMessage
 		if(botLogsChannel.lastMessage.content == "❔ Restart bot") {
 			botLogsChannel.edit("✔️ Restart bot")
 		} else {
