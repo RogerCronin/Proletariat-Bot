@@ -25,14 +25,16 @@ module.exports = new banner.Command({
     // remember to update for every change to the bot, add a space before the bullet point
 		/* paste readme.md patch notes here
 
-		## Patch Notes (Update 2020-09-03)
-		 * Added p!download
+    ## Patch Notes (Update 2020-10-14)
+     * Added p!update
+     * Now I won't have to the ordeal of messing with PuTTY and FileZilla
 
 		*/
 		// ensure there is a blank line bewteen the end of patch notes and ${bot.client.user.username} stuff
-    let string = `**Patch Notes (Update 2020-10-13)**
- • Updated to version 5.0!
- • Ported to my brand new discord.js bot framework
+    let string = `\
+**Patch Notes (Update 2020-10-14)**
+ • Added p!update
+ • Now I won't have to the ordeal of messing with PuTTY and FileZilla
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 

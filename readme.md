@@ -21,6 +21,6 @@ My Discord profile is `Roger#4803`; contact me if you have any questions. Or jus
 Shoot me a DM if you want anything added to the bot. I might consider it. Or I might not.
 I don't think anyone wants to make a pull request for this shitty code but feel free.
 
-## Patch Notes (Update 2020-10-13)
- * Updated to version 5.0!
- * Ported to my brand new discord.js bot framework
+## Patch Notes (Update 2020-10-14)
+ * Added p!update
+ * Now I won't have to the ordeal of messing with PuTTY and FileZilla
