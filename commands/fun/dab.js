@@ -1,15 +1,14 @@
+const banner = require("banner-framework")
 var dabs = {}
 
-module.exports = {
-	adminOnly: false,
-	permissions: "",
-	serverSpecific: false,
-	enableDM: true,
+module.exports = new banner.Command({
+  enableDM: false,
 	name: "dab",
 	title: "dab",
 	description: "Dabs for a while, I guess. <o/",
-	execute: async (message, args) => {
-		if(dabs[message.guild.id]) clearInterval(dabs[message.guild.id])
+	category: "general",
+	execute: async function(message, args) {
+    if(dabs[message.guild.id]) clearInterval(dabs[message.guild.id])
 		const msg = await message.channel.send("<o/")
 		let facing = true
 		let count = 0
@@ -26,4 +25,4 @@ module.exports = {
 		}, 1500)
 	},
 	checkSyntax: (message, args) => args[1] ? "More arguments than expected." : true
-}
+})

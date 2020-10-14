@@ -11,6 +11,7 @@
   "author": "Roger Cronin",
   "license": "ISC",
   "dependencies": {
+    "banner-framework": "^1.0.0",
     "date-and-time": "^0.13.1",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",

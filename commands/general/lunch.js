@@ -1,19 +1,17 @@
+const banner = require("banner-framework")
 const fetch = require("node-fetch")
 const date = require("date-and-time") // I could probably get rid of this library but I don't really want to
 
-module.exports = { // most of this code was taken from Proletariat Bot 3 (ain't broke don't fix)
-	adminOnly: true, // make sure to change this after testing!
-	// CAPS SO YOU REMEMBER
-	// PLEASE REMEMBER
-	// YOU DUMMY
-	permissions: "",
-	serverSpecific: ["523242594860269568", "390264660789690388"],
-	enableDM: false,
+module.exports = new banner.Command({
+  adminOnly: true, // CHANGE WHEN YOU'RE DONE
+  serverSpecific: ["523242594860269568", "390264660789690388"],
+  aliases: [],
 	name: "lunch",
 	title: "lunch <today/tomorrow opt.>",
 	description: "Displays the school lunches for the current day or tomorrow, defaulting to today.",
-	execute: async (message, args) => {
-		const msg = await message.channel.send(bot.loadingMessage())
+	category: "general",
+	execute: async function(message, args) {
+    const msg = await message.channel.send(bot.loadingMessage())
 		let now = new Date() // date object
 		if(args[1] == "tomorrow") {
 			date.addDays(now, 1)
@@ -36,13 +34,13 @@ module.exports = { // most of this code was taken from Proletariat Bot 3 (ain't 
 				}
 				msg.edit("", embed)
 			})
-			.catch(() => msg.edit(bot.errorMessage()))
+			.catch(() => msg.edit(this.errorMessage("error", "Error fetching lunch.", "lunch:0")))
 	},
-	checkSyntax: (message, args) => {
-		if(args[1]) {
-			if(args[1] != "today" && args[1] != "tomorrow") return "Second argument must be today or tomorrow."
-		}
-		if(args[2]) return "More arguments than expected."
-		return true
-	}
-}
+	checkSyntax: function(message, args) {
+    if(args[1]) {
+      if(args[1] != "today" && args[1] != "tomorrow") return "Second argument must be today or tomorrow."
+    }
+    if(args[2]) return "More arguments than expected."
+    return true
+  }
+})

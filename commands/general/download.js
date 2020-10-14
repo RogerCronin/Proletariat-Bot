@@ -1,18 +1,15 @@
+const banner = require("banner-framework")
 const url = require("url")
 const fetch = require("node-fetch")
 const htmlParser = require("node-html-parser")
 
-module.exports = {
-	adminOnly: false,
-	permissions: "",
-	serverSpecific: false,
-	enableDM: true,
+module.exports = new banner.Command({
 	name: "download",
-	aliases: [],
 	title: "download [twitter url/reddit url]",
 	description: "Downloads a video from the Twitter or Reddit URL provided courteous of RipSave and SaveTweetVid.",
-	execute: async (message, args) => {
-		const msg = await message.channel.send(bot.loadingMessage())
+	category: "general",
+	execute: async function(message, args) {
+    const msg = await message.channel.send(bot.loadingMessage())
 		if(Array.from(args[1].matchAll(/(?:https:\/\/)(?:www\.)?(twitter|reddit)/g))[0][1] == "reddit") { // I love regex
 			try {
 				// post url to /getlink
@@ -40,8 +37,8 @@ module.exports = {
 					msg.edit("", embed)
 				}
 			} catch(e) { // misc catch because I can't be bothered
-				console.log(e)
-				msg.edit(bot.errorMessage())
+				console.error(e)
+				msg.edit(this.errorMessage("error", "Error fetching Reddit content.", "download:0"))
 			}
 		} else {
 			try {
@@ -55,18 +52,19 @@ module.exports = {
 					.setTitle(`Tweet by ${parsedHTML.querySelector("h5").firstChild.firstChild.rawText.trim()}`)
 					.setURL(parsedHTML.querySelector(".page-content").childNodes[1].childNodes[1].childNodes[1].childNodes[3].childNodes[1].childNodes[3].childNodes[1].childNodes[3].childNodes[1].childNodes[7].childNodes[1].getAttribute("href"))
 				msg.edit("", embed)
-			} catch {
-				msg.edit(bot.errorMessage())
+			} catch(e) {
+        console.error(e)
+				msg.edit(this.errorMessage("error", "Error fetching Twitter content.", "download:1"))
 			}
 		}
 	},
-	checkSyntax: (message, args) => {
-		if(!args[1]) return "Expected URL."
+	checkSyntax: function(message, args) {
+    if(!args[1]) return "Expected URL."
 		if(args[2]) return "More arguments than expected."
 		try {
 			let inputUrl = new url.URL(args[1])
 			if(inputUrl.hostname == "www.reddit.com" || inputUrl.hostname == "twitter.com") return true
 		} catch {} // error handling done outside of try / catch
 		return "Invalid Reddit or Twitter share link."
-	}
-}
+  }
+})

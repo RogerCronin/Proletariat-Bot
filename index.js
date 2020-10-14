@@ -1,56 +1,41 @@
 console.log("Starting...")
 
 // TODO
-// command aliases(?)
-// test p!lunch when school starts
+// test p!lunch when school is in person
 // fix p!weather / wait for weather.gov to fix their api
-// optional prefix @bot
+// remote update command
+// github update banner-framework file stuff'
+// remake p!server with https://api.mcsrvstat.us/
 
-// npm libraries
-require("dotenv").config()
 const discord = require("discord.js")
+const banner = require("banner-framework")
+const fs = require("fs")
+const snoowrap = require("snoowrap")
 
-// variables
-const client = new discord.Client()
-// list of commands
-const commands = { // writing all of them out is necessary so there is a defined order for p!help
-	nested: { // category cannot contain only admin commands, otherwise fucky help command format fixing required
-		general: {
-			help: require("./commands/general/help.js"),
-			translate: require("./commands/general/translate.js"),
-			server: require("./commands/general/server.js"),
-			lunch: require("./commands/general/lunch.js"),
-			weather: require("./commands/general/weather.js"),
-			uptime: require("./commands/general/uptime.js"),
-			link: require("./commands/general/link.js"),
-			random: require("./commands/general/random.js"),
-			timer: require("./commands/general/timer.js"),
-			download: require("./commands/general/download.js"),
-			debug: require("./commands/general/debug.js")
-		},
-		fun: {
-			generate: require("./commands/fun/generate.js"),
-			duel: require("./commands/fun/duel.js"),
-			flood: require("./commands/fun/flood.js"),
-			uwuify: require("./commands/fun/uwuify.js"),
-			dab: require("./commands/fun/dab.js"),
-			bedwars: require("./commands/fun/bedwars.js"),
-			reddit: require("./commands/fun/reddit.js"),
-			nasa: require("./commands/fun/nasa.js"),
-			echo: require("./commands/fun/echo.js")
-		}
-	},
-	flat: {},
-	aliases: {}
-}
-for(category in commands.nested) {
-	for(commandName in commands.nested[category]) {
-		command = commands.nested[category][commandName]
-		// take the categories from commands.nested and add to commands.flat
-		commands.flat[commandName] = command
-		// add aliases to commands.aliases object
-		if(command.aliases) for(alias of command.aliases) commands.aliases[alias] = command
-	}
+const commands = {
+	// general
+	help: require("./commands/general/help.js"),
+	translate: require("./commands/general/translate.js"),
+	server: require("./commands/general/server.js"),
+	lunch: require("./commands/general/lunch.js"),
+	weather: require("./commands/general/weather.js"),
+	uptime: require("./commands/general/uptime.js"),
+	link: require("./commands/general/link.js"),
+	random: require("./commands/general/random.js"),
+	timer: require("./commands/general/timer.js"),
+	download: require("./commands/general/download.js"),
+	//fun
+	generate: require("./commands/fun/generate.js"),
+	duel: require("./commands/fun/duel.js"),
+	flood: require("./commands/fun/flood.js"),
+	uwuify: require("./commands/fun/uwuify.js"),
+	dab: require("./commands/fun/dab.js"),
+	bedwars: require("./commands/fun/bedwars.js"),
+	reddit: require("./commands/fun/reddit.js"),
+	nasa: require("./commands/fun/nasa.js"),
+	// admin
+	debug: require("./commands/admin/debug.js"),
+	echo: require("./commands/admin/echo.js")
 }
 const events = {
 	goodbot: require("./events/goodbot.js"),
@@ -60,64 +45,38 @@ const events = {
 	aita: require("./events/aita.js")
 }
 
-global.bot = require("./files/bot.js")(discord, client, commands) // initialize variable containing important data and functions
-
-client.on("ready", () => {
-	console.log("Ready to rumble")
-	let activity = bot.activityMessage()
-	client.user.setActivity(activity[0], { type: activity[1] })
-	setInterval(() => { // changes user activity every 5 minutes
-		activity = bot.activityMessage()
-		client.user.setActivity(activity[0], {type: activity[1]})
-	}, 300000)
-})
-
-if(bot.debug) { // when bot sends a debug message
-	client.on("debug", debug => {
-		console.log("[DEBUG] " + debug) // fancy debug text
+module.exports = isDev => {
+	const options = {
+	  debugOutput: false, // debug outputing
+	  prefix: isDev ? "tb!" : "p!", // bot prefix
+	  color: 0xDC0000, // embed color background
+	  loadingMessage: () => bot.information.loadingMessages[Math.floor(Math.random() * bot.information.loadingMessages.length)],
+	  errorMessage: () => bot.information.errorMessages[Math.floor(Math.random() * bot.information.errorMessages.length)],
+	  activityMessage: () => bot.information.activityMessages[Math.floor(Math.random() * bot.information.activityMessages.length)],
+	  categories: ["general"],
+	  information: require("./files/information.json"), // additional json information accessible via a bot instance
+	  botProtection: false
+	}
+	global.bot = new banner.Bot(discord, commands, events, options)
+	bot.addEnv(["proletariatBot", "testBot", "imgBBKey", "hypixelKey", "nasaKey", "redditID", "redditSecret", "redditPassword", "unicodeSecret"])
+	isDev ? bot.login(bot.testBot) : bot.login(bot.proletariatBot)
+	bot.manifesto = fs.readFileSync(__dirname + "/files/manifesto.txt", { encoding: "utf8" })
+	bot.redditWrap = new snoowrap({
+		userAgent: "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)",
+		clientId: bot.redditID,
+		clientSecret: bot.redditSecret,
+		username: "SaladTheMediocre", // hey that's me
+		password: bot.redditPassword
 	})
-}
-
-client.on("message", message => {
-	if(message.author.bot) return // protects against bots
-	if(message.content.startsWith(bot.prefix)) { // if it's a command, parse it
-		parseCommand(message)
-	} else { // otherwise process it as an event
-		processEvent(message)
-	}
-})
-
-function parseCommand(message) {
-	args = message.content.slice(bot.prefix.length).split(" ").filter(i => i) // splits command into an array and removes empty arguments
-	let command = bot.commands.flat[args[0]] || bot.commands.aliases[args[0]]
-	if(!command) return // if command doesn't exist, return
-	if(command.serverSpecific) { // if command is server specific, check if you're on the right server
-		if(!bot.checkAdmin(message.author.id)) { // if you're not a bot admin (admins can perform server restricted commands)
-			if(message.channel.type != "text") return // dms can't be on servers
-			if(!command.serverSpecific.includes(message.channel.guild.id)) return // if command isn't on approved server, return
+	bot.client.on("ready", () => {
+		console.log("Ready to rumble")
+	})
+	bot.client.on("presenceUpdate", (before, after) => { // robot man offline stuff
+		if(!before || !after) return // why would an event trigger with both parameters undefined???? wtf discord.js?????
+		if(before.userID == "639633583736094759" && before.status == "online" && after.status == "offline") {
+			client.channels.cache.get("536529708490293248").send("Robot Man III went offline lmao")
 		}
-	}
-	if(command.adminOnly && !bot.checkAdmin(message.author.id)) return
-	if(!command.enableDM && message.channel.type == "dm") return message.channel.send("This command isn't available in DMs.")
-	if(command.permissions ? !message.member.hasPermission(command.permissions) : false) return message.channel.send("You don't have proper permissions to use this command!")
-	let check = command.checkSyntax(message, args)
-	if(check === true) { // if syntax checks out, execute, otherwise send error report
-		command.execute(message, args)
-	} else {
-		message.channel.send(`Incorrect syntax. Command should be formatted as:\n\`${bot.prefix}${command.title}\`\nMessage: ${check}`)
-	}
-}
-
-function processEvent(message) {
-	for(e in events) { // for every event, call it
-		events[e](message)
-	}
-}
-
-module.exports = flag => {
-	if(flag) {
-		bot.prefix = bot.testBotPrefix
-		bot.botToken = bot.testBot
-	}
-	client.login(bot.botToken)
+	})
+	// Roger - 316947582670602240
+	// RM    - 639633583736094759
 }

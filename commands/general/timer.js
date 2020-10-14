@@ -1,20 +1,20 @@
+const banner = require("banner-framework")
+
 var timers = {}
 
-module.exports = {
-	adminOnly: false,
-	permissions: "",
-	serverSpecific: false,
-	enableDM: true,
+module.exports = new banner.Command({
+  aliases: ["remind"],
 	name: "timer",
-	title: "timer <[number under 48 hours]<s/m/h>> [reason..]",
-	description: "Sets a timer for a set number of seconds, minutes, or hours. Can't be over 48 hours because I can't be bothered.",
-	execute: async (message, args) => {
-		if(timers[message.author.id]) return message.channel.send("You already have a timer going. Click the X reaction under the timer to delete it.")
-		let reason = message.content.substring(message.content.match(/p!timer [0-9]{1,6}[smh] /m)[0].length)
+	title: "timer [wait time] [reason..]",
+	description: "Format with hours, minutes, or seconds like `1h1m1s`.",
+	category: "general",
+	execute: async function(message, args) {
+    if(timers[message.author.id]) return message.channel.send(this.errorMessage("error", "You already have a timer going. Click the X reaction under the timer to delete it.", "timer:0"))
+    let reason = message.content.substring(message.content.match(/(?:p|(?:tb))!timer \S+ /)[0].length)
 		timers[message.author.id] = {
 			user: message.author,
 			reason: reason,
-			seconds: formatSec(args),
+			seconds: formatSec(args[1]),
 			paused: false
 		}
 		try {
@@ -56,28 +56,37 @@ module.exports = {
 					})
 				})
 		} catch(err) {
-			console.log(err)
+			console.error(err)
 			delete timers[message.author.id]
-			message.channel.send("I can't send DMs to you, check the server privacy settings.")
+			message.channel.send(this.errorMessage("error", "I can't send DMs to you, check the server privacy settings.", "timer:1"))
 		}
 	},
-	checkSyntax: (message, args) => {
-		if(!args[2]) return "No time or reason provided."
-		if(!args[1].match(/[0-9]{1,6}[smh]$/m)) return "Incorrectly formatted time."
-		if(message.content.substring(message.content.match(/p!timer [0-9]{1,6}[smh] /m)[0].length).length > 128) return "Reason over 128 characters."
-		let num = formatSec(args)
-		if(num > 172800) return "Incorrectly formatted time or time provided over 48 hours."
-		return true
-	}
-}
+	checkSyntax: function(message, args) {
+    if(!args[2]) return "No time or reason provided."
+    // string.match(regex)[0] == string && string.length > 0
+    if(!(args[1].match(/(([0-9]+h)?([0-9]+m)?([0-9]+s)?)$/gm)[0] == args[1] && args[1].length > 0)) return "Incorrectly formatted time."
+    let seconds = formatSec(args[1])
+    if(seconds > 172800) return "Time provided is over 48 hours."
+    if(seconds == 0) return "Timer cannot be 0 seconds long."
+    return true
+  }
+})
 
 var format = (seconds, reason) => `${reason}\n${((Math.floor(seconds / 60 / 60) + 100 + "").substring(1))}:${(Math.floor(seconds / 60) % 60 + 100 + "").substring(1)}:${(seconds % 60 + 100 + "").substring(1)}`
 
-function formatSec(args) {
-	let unit = args[1].match(/[smh]/)
-	let num = args[1].match(/[0-9]{1,6}/)
-	if(unit == "m") num *= 60
-	if(unit == "h") num *= 3600
-	num *= 1
-	return num
+function formatSec(string) {
+  let seconds = 0
+  for(match of string.match(/[0-9]+[smh]/g)) {
+    switch(match.slice(-1)) {
+      case "s":
+        seconds += match.slice(0, -1) * 1
+        break
+      case "m":
+        seconds += match.slice(0, -1) * 60
+        break
+      default:
+        seconds += match.slice(0, -1) * 3600
+    }
+  }
+  return seconds
 }

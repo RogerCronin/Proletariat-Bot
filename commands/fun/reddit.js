@@ -1,13 +1,12 @@
-module.exports = {
-	adminOnly: false,
-	permissions: "",
-	serverSpecific: false,
-	enableDM: true,
+const banner = require("banner-framework")
+
+module.exports = new banner.Command({
 	name: "reddit",
 	title: "reddit <hot/new/top opt.> [subreddit name]",
 	description: "Fetches a Reddit post for you like a good bot. If you forget to add in the first parameter it'll default to hot. \`top\` gets the top post of the month.",
-	execute: async (message, args) => {
-		const msg = await message.channel.send(bot.loadingMessage())
+	category: "fun",
+	execute: async function(message, args) {
+    const msg = await message.channel.send(bot.loadingMessage())
 		let sort = "hot"
 		let subreddit
 		if(["hot", "new", "top"].includes(args[1])) {
@@ -72,8 +71,8 @@ module.exports = {
 				break
 		}
 	},
-	checkSyntax: (message, args) => {
-		if(["hot", "new", "top"].includes(args[1])) {
+	checkSyntax: function(message, args) {
+    if(["hot", "new", "top"].includes(args[1])) {
 			if(!args[2]) return "No subreddit name."
 			if(args[3]) return "More arguments than expected."
 		} else {
@@ -81,5 +80,5 @@ module.exports = {
 			if(args[2]) return "More arguments than expected."
 		}
 		return true
-	}
-}
+  }
+})

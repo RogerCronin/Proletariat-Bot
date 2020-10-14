@@ -1,13 +1,14 @@
-module.exports = {
-	adminOnly: false,
-	permissions: "",
-	serverSpecific: false,
-	enableDM: false,
+const banner = require("banner-framework")
+
+module.exports = new banner.Command({
+  enableDM: false,
+  aliases: ["markov", "build"],
 	name: "generate",
 	title: "generate <@[username]> <#[text channel] opt.>",
 	description: "Generates a message the person you pinged could've said through a simple A.I. Based on conversations found in the specified channel, defaulting to the channel the command was sent in.",
-	execute: async (message, args) => {
-		//running = true
+	category: "fun",
+	execute: async function(message, args) {
+    //running = true
 		const maxMessages = 100 // in 100s, i.e. maxMessages = 100 gathers 10000 messages
 		let user = message.mentions.users.first()
 		let channel
@@ -28,7 +29,7 @@ module.exports = {
 				messageCount += msgs.size
 				messages[i] = msgs
 			} catch(e) {
-				console.log(e)
+				//console.error(e) // I think I can comment this out?
 				break // ran out of messages to dab
 			}
 			if(i % 10 == 0) {
@@ -51,16 +52,16 @@ module.exports = {
 			.setDescription(string)
 		msg.edit(`\`Generated with ${messageCount} messages from ${user.username}\``, embed)
 	},
-	checkSyntax: (message, args) => {
-		if(!args[1]) return "User mention required."
+	checkSyntax: function(message, args) {
+    if(!args[1]) return "User mention required."
 		if(!bot.getUserMention(args[1])) return "Malformed user mention."
 		if(args[2]) {
 			if(!bot.getChannelMention(args[2])) return "Malformed channel mention."
 		}
 		if(args[3]) return "More arguments than expected."
 		return true
-	}
-}
+  }
+})
 
 function buildMarkovChain(list) {
 	list = list.split(" ")

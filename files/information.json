@@ -16,21 +16,30 @@
 		"This is taking way too long",
 		"If you're seeing this for more than a few seconds, something went wrong",
 		"Cargando...",
-		"Beep boop the workers will rise"
+		"Beep boop the workers will rise",
+		"Loading messages, now with 40% more load times!",
+		"Proletariat Bot v5.0 loading times are 0 times faster!",
+		"Remind me to delete this loading message later"
 	],
 
 	"errorMessages": [
-		"Oh god oh fuck error message",
-		"Whoopsies this is an error message",
+		"Oh god oh fuck error message.",
+		"Whoopsies this is an error message.",
 		"I guess you could call this an error message?",
-		"Ouch oof owie my code went die",
-		"Well *that* wasn't supposed to happen",
-		"Frick this is an error message",
+		"Ouch oof owie my code went die.",
+		"Well *that* wasn't supposed to happen.",
+		"Frick this is an error message.",
 		"You're so incompetent that you broke a fucking Discord bot. Good job.",
 		"This message is an error. Please tell Roger his bot is broken.",
-		"Bot machine broke",
+		"Bot machine broke.",
 		"Congrats on seeing this message. Most people never have the privilege of seeing Proletariat Bot's vast collection of error messages.",
-		"Goddamnit, you broke Proletariat Bot"
+		"Seeing this error message is a 1 in 11 chance!",
+		"Goddamnit, you broke Proletariat Bot.",
+		"I bet Jacob's bot would do this properly.",
+		"This is the first error message added in v5.0!",
+		"// TODO add more error messages.",
+		"If this bot was coded properly, you'd never see this error message.",
+		"I wonder why *this* error message was chosen..."
 	],
 
 	"activityMessages": [
@@ -76,7 +85,10 @@
 		["FusionReign on Twitch", 3],
 		["Harrisn_t on Twitch", 3],
 		["Fall Guys: Ultimate Knockout", 0],
-		["Microsoft Paint", 0]
+		["Microsoft Paint", 0],
+		["the vast expanse of my error logs folder", 3],
+		["Among Us", 0],
+		["illegal Nintendo ROMs", 0]
 	],
 
 	"assholeMessagesA": [
@@ -96,6 +108,10 @@
 		"gtfo of that relationship",
 		"that's ridiculous"
 	],
+
+	"_admins": {
+		"nothing to see": "here!"
+	},
 
 	"admins": {
 		"316947582670602240": true,

@@ -1,22 +1,20 @@
+const banner = require("banner-framework")
 const fetch = require("node-fetch")
 
-module.exports = {
-	adminOnly: false,
-	permissions: "",
-	serverSpecific: false,
-	enableDM: true,
+module.exports = new banner.Command({
 	name: "bedwars",
 	title: "bedwars [player]",
 	description: "Displays information about player stats in Hypixel's Bed Wars.",
-	execute: async (message, args) => { // imported all of this from Proletariat Bot 3 with little changes
-		const msg = await message.channel.send(bot.loadingMessage())
+	category: "fun",
+	execute: async function(message, args) { // imported all of this from Proletariat Bot 3 with little changes
+    const msg = await message.channel.send(bot.loadingMessage())
 		try {
 			let res = await fetch(`https://api.hypixel.net/player?key=${bot.hypixelKey}&name=${args[1]}`, { headers: { "User-Agent": "nodejs:com.proletariat.bot:v4.0.0 (by /u/SaladTheMediocre)" } })
 			let data = await res.json()
-			if(data.player == null) return msg.edit("That person doesn't exist, fool")
+			if(data.player == null) return msg.edit(this.errorMessage("error", "That person doesn't exist, fool.", "bedwars:0"))
 			let ref = data.player.stats.Bedwars //reference
 			if(!ref.kills_bedwars) {
-				return msg.edit("That person hasn't played BedWars, fool")
+				return msg.edit(this.errorMessage("error", "That person hasn't played BedWars, fool.", "bedwars:1"))
 			}
 			if(data.player.monthlyPackageRank) data.player.newPackageRank = "MVP++" // if they have a monthly rank, set it to MVP++
 			let stringObj = {} // master object that holds strings
@@ -68,15 +66,15 @@ module.exports = {
 				if(data.player.newPackageRank) embed.setTitle(`[${data.player.newPackageRank}] ${data.player.displayname}`)
 			msg.edit("", embed)
 		} catch(err) {
-			console.log(err)
-			msg.edit(bot.errorMessage())
+			console.error(err)
+			msg.edit(this.errorMessage("error", "Error in fetching from Hypixel API.", "bedwars:2"))
 		}
 	},
-	checkSyntax: (message, args) => {
-		if(!args[1]) return "No username provided."
+	checkSyntax: function(message, args) {
+    if(!args[1]) return "No username provided."
 		if(args[2]) return "More arguments than expected."
 		return true
-	}
-}
+  }
+})
 
-var format = number => number ? number : 0 // if !number, return 0
+const format = number => number ? number : 0 // if !number, return 0
