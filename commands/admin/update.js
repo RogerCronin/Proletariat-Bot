@@ -7,7 +7,7 @@ module.exports = new banner.Command({
 	name: "update",
 	title: "update",
 	description: "Updates the bot to the latest version.",
-	category: "category1",
+	category: "admin",
 	execute: async function(message, args) {
     if(message.channel.id != "765996274721751040") return message.channel.send(this.errorMessage("This command can only be executed in the bot-logs channel.", "update:0"))
     const msg_1 = await message.channel.send("❔ Pull latest version from GitHub")
