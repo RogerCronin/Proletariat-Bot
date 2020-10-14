@@ -9,18 +9,14 @@ module.exports = new banner.Command({
 	description: "Updates the bot to the latest version.",
 	category: "admin",
 	execute: async function(message, args) {
-		console.log(1)
 		if(message.channel.id != "765996274721751040") return message.channel.send(this.errorMessage("error", "This command can only be executed in the bot-logs channel.", "update:0"))
-		console.log(2)
 		const msg_1 = await message.channel.send("❔ Pull latest version from GitHub")
-		console.log(3)
-		console.log(execSync("git pull").toString())
-		console.log(4)
-		await msg_1.edit("✔️ Pull latest version from GitHub")
-		console.log(5)
+		if(execSync("git pull").toString().startsWith("Already up to date")) {
+			await msg_1.edit("✔️ Pull latest version from GitHub")
+			return message.channel.send("Already up to date! No need to restart.")
+		}
 		const msg_2 = await message.channel.send("❔ Restart bot")
-		console.log(6)
-		//console.log(execSync("pm2 restart Proletariat-Bot"))
+		//console.log(execSync("pm2 restart Proletariat-Bot").toString())
 	},
 	checkSyntax: function(message, args) {
 		console.log("check")
