@@ -6,6 +6,7 @@ console.log("Starting...")
 // remote update command
 // github update banner-framework file stuff'
 // remake p!server with https://api.mcsrvstat.us/
+// refactor reddit.js cause ugly code
 
 const discord = require("discord.js")
 const banner = require("banner-framework")
@@ -71,6 +72,7 @@ module.exports = isDev => {
 	})
 	bot.client.on("ready", async () => {
 		console.log("Ready to rumble")
+		if(isDev) return
 		let lastMessage = await bot.client.channels.cache.get("765996274721751040").messages.fetch({ limit: 1 })
 		lastMessage = lastMessage.first()
 		if(lastMessage.content == "❔ Restart bot") {

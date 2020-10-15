@@ -24,3 +24,4 @@ I don't think anyone wants to make a pull request for this shitty code but feel 
 ## Patch Notes (Update 2020-10-14)
  * Added p!update
  * Now I won't have to the ordeal of messing with PuTTY and FileZilla
+ * Added controversial sorting to p!reddit

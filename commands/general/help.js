@@ -35,6 +35,7 @@ module.exports = new banner.Command({
 **Patch Notes (Update 2020-10-14)**
  • Added p!update
  • Now I won't have to the ordeal of messing with PuTTY and FileZilla
+ • Added controversial sorting to p!reddit
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 
