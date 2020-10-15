@@ -1,6 +1,6 @@
 # Proletariat Bot
 
-Proletariat Bot is a Discord bot writen in Node.js using the [Discord.js](https://discord.js.org/#/) npm library. This is the fifth iteration of the bot, a great-great-grandson of the original, if you will. Well technically the sixth, but I've repressed the memories of my original Proletariat Bot project, so I can't tell you anything about it. I also made a bot framework called Banner Framework that can be found on [npm](https://www.npmjs.com/package/banner-framework). If you *really* want to make your bot using this, feel free to look at the Proletariat Bot source code here.
+Proletariat Bot is a Discord bot written in Node.js using the [Discord.js](https://discord.js.org/#/) npm library. This is the fifth iteration of the bot, a great-great-grandson of the original, if you will. Well technically the sixth, but I've repressed the memories of my original Proletariat Bot project, so I can't tell you anything about it. I also made a bot framework called Banner Framework that can be found on [npm](https://www.npmjs.com/package/banner-framework). If you *really* want to make your bot using this, feel free to look at the Proletariat Bot source code here.
 
 ## Usage
 
