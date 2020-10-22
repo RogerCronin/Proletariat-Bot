@@ -83,7 +83,7 @@ module.exports = isDev => {
 	bot.client.on("presenceUpdate", (before, after) => { // robot man offline stuff
 		if(!before || !after) return // why would an event trigger with both parameters undefined???? wtf discord.js?????
 		if(before.userID == "639633583736094759" && before.status == "online" && after.status == "offline") {
-			client.channels.cache.get("536529708490293248").send("Robot Man III went offline lmao")
+			bot.client.channels.cache.get("536529708490293248").send("Robot Man III went offline lmao")
 		}
 	})
 	// Roger - 316947582670602240
