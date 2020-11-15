@@ -6,7 +6,7 @@ module.exports = new banner.Command({
 	name: "dab",
 	title: "dab",
 	description: "Dabs for a while, I guess. <o/",
-	category: "general",
+	category: "fun",
 	execute: async function(message, args) {
     if(dabs[message.guild.id]) clearInterval(dabs[message.guild.id])
 		const msg = await message.channel.send("<o/")

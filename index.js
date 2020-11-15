@@ -7,6 +7,7 @@ console.log("Starting...")
 // github update banner-framework file stuff'
 // remake p!server with https://api.mcsrvstat.us/
 // refactor reddit.js cause ugly code
+// p!poll
 
 const discord = require("discord.js")
 const banner = require("banner-framework")
@@ -25,6 +26,7 @@ const commands = {
 	random: require("./commands/general/random.js"),
 	timer: require("./commands/general/timer.js"),
 	download: require("./commands/general/download.js"),
+	poll: require("./commands/general/poll.js"),
 	//fun
 	generate: require("./commands/fun/generate.js"),
 	duel: require("./commands/fun/duel.js"),
