@@ -25,17 +25,14 @@ module.exports = new banner.Command({
     // remember to update for every change to the bot, add a space before the bullet point
 		/* paste readme.md patch notes here
 
-    ## Patch Notes (Update 2020-10-14)
-     * Added p!update
-     * Now I won't have to the ordeal of messing with PuTTY and FileZilla
+    ## Patch Notes (Update 2021-4-21)
+     * Fixed Twitter p!download functionality (thanks @wiggly_)
 
 		*/
 		// ensure there is a blank line bewteen the end of patch notes and ${bot.client.user.username} stuff
     let string = `\
-**Patch Notes (Update 2020-10-14)**
- • Added p!update
- • Now I won't have to the ordeal of messing with PuTTY and FileZilla
- • Added controversial sorting to p!reddit
+**Patch Notes (Update 2021-4-21)**
+ • Fixed Twitter p!download functionality (thanks @wiggly_)
 
 ${bot.client.user.username} commands:\n\n` // start of help message
 
