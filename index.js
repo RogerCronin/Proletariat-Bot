@@ -7,12 +7,13 @@ console.log("Starting...")
 // github update banner-framework file stuff'
 // remake p!server with https://api.mcsrvstat.us/
 // refactor reddit.js cause ugly code
-// p!poll
 
 const discord = require("discord.js")
 const banner = require("banner-framework")
 const fs = require("fs")
 const snoowrap = require("snoowrap")
+const low = require("lowdb")
+const FileSync = require("lowdb/adapters/FileSync")
 
 const commands = {
 	// general
@@ -27,6 +28,7 @@ const commands = {
 	timer: require("./commands/general/timer.js"),
 	download: require("./commands/general/download.js"),
 	poll: require("./commands/general/poll.js"),
+	eventopt: require("./commands/general/events.js"),
 	//fun
 	generate: require("./commands/fun/generate.js"),
 	duel: require("./commands/fun/duel.js"),
@@ -41,6 +43,22 @@ const commands = {
 	echo: require("./commands/admin/echo.js"),
 	update: require("./commands/admin/update.js")
 }
+
+const eventObject = {
+	eventList: {
+		goodbot: require("./events/goodbot.js"),
+		lyrics: require("./events/lyrics.js"),
+		reddit: require("./events/reddit.js"),
+		haiku: require("./events/haiku.js"),
+		aita: require("./events/aita.js")
+	},
+	checker: id => {
+		let guild = bot.db.get(id).value()
+		if(guild == false) return false
+		return true
+	}
+}
+/*
 const events = {
 	goodbot: require("./events/goodbot.js"),
 	lyrics: require("./events/lyrics.js"),
@@ -48,8 +66,8 @@ const events = {
 	haiku: require("./events/haiku.js"),
 	aita: require("./events/aita.js")
 }
-
-module.exports = isDev => {
+*/
+module.exports = async isDev => {
 	const options = {
 	  debugOutput: false, // debug outputing
 	  prefix: isDev ? "tb!" : "p!", // bot prefix
@@ -61,7 +79,7 @@ module.exports = isDev => {
 	  information: require("./files/information.json"), // additional json information accessible via a bot instance
 	  botProtection: false
 	}
-	global.bot = new banner.Bot(discord, commands, events, options)
+	global.bot = new banner.Bot(discord, commands, eventObject, options)
 	bot.addEnv(["proletariatBot", "testBot", "imgBBKey", "hypixelKey", "nasaKey", "redditID", "redditSecret", "redditPassword", "unicodeSecret"])
 	isDev ? bot.login(bot.testBot) : bot.login(bot.proletariatBot)
 	bot.manifesto = fs.readFileSync(__dirname + "/files/manifesto.txt", { encoding: "utf8" })
@@ -72,6 +90,7 @@ module.exports = isDev => {
 		username: "SaladTheMediocre", // hey that's me
 		password: bot.redditPassword
 	})
+	bot.db = await low(new FileSync("files/db.json"))
 	bot.client.on("ready", async () => {
 		console.log("Ready to rumble")
 		if(isDev) return

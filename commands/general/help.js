@@ -25,13 +25,15 @@ module.exports = new banner.Command({
     // remember to update for every change to the bot, add a space before the bullet point
 		/* paste readme.md patch notes here
 
-    ## Patch Notes (Update 2021-4-21)
+    ## Patch Notes (Update 2021-4-26)
+		 * You can opt out of those annoying events with p!events false
      * Fixed Twitter p!download functionality (thanks @wiggly_)
 
 		*/
 		// ensure there is a blank line bewteen the end of patch notes and ${bot.client.user.username} stuff
     let string = `\
-**Patch Notes (Update 2021-4-21)**
+**Patch Notes (Update 2021-4-26)**
+ • You can opt out of those annoying events with p!events false
  • Fixed Twitter p!download functionality (thanks @wiggly_)
 
 ${bot.client.user.username} commands:\n\n` // start of help message

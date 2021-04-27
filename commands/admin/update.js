@@ -16,7 +16,10 @@ module.exports = new banner.Command({
 			return message.channel.send("Already up to date! No need to restart.")
 		}
 		await msg_1.edit("✅ Pull latest version from GitHub")
-		const msg_2 = await message.channel.send("❔ Restart bot")
+		const msg_2 = await message.channel.send("❔ Install packages")
+		execSync("npm install")
+		msg_2.edit("✅ Install packages")
+		const msg_3 = await message.channel.send("❔ Restart bot")
 		execSync("pm2 restart Proletariat-Bot") // kills process
 	},
 	checkSyntax: function(message, args) {
