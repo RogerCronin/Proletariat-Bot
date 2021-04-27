@@ -28,7 +28,7 @@ const commands = {
 	timer: require("./commands/general/timer.js"),
 	download: require("./commands/general/download.js"),
 	poll: require("./commands/general/poll.js"),
-	eventopt: require("./commands/general/events.js"),
+	events: require("./commands/general/events.js"),
 	//fun
 	generate: require("./commands/fun/generate.js"),
 	duel: require("./commands/fun/duel.js"),
