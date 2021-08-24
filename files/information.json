@@ -49,7 +49,7 @@
 		["with Robot Man III", 0],
 		["Mario Kart Wii", 0],
 		["Minecraft", 0],
-		["TwitchTetris", 0],
+		["Twitch Tetris", 0],
 		["Discord", 0],
 		["Russian roulette", 0],
 		["BedWars", 0],
@@ -105,7 +105,8 @@
 		["manhunt", 0],
 		["hide and go seek", 0],
 		["tag", 0],
-		["the seconds tick by", 3]
+		["the seconds tick by", 3],
+		["on squarebrackets.net", 0]
 	],
 
 	"assholeMessagesA": [
